@@ -1,0 +1,22 @@
+ <div class="input-group-overlay d-none d-md-block mx-4"
+                     style="text-align: {{Session::get('direction') === "rtl" ? 'right' : 'left'}}">
+                    <form action="{{route('products')}}" type="submit" class="search_form">
+                        <input class="form-control appended-form-control search-bar-input" type="text"
+                               autocomplete="off"
+                               placeholder="{{\App\CPU\translate('search')}}"
+                               name="name">
+                        <button class="input-group-append-overlay search_button" type="submit"
+                                style="border-radius: {{Session::get('direction') === "rtl" ? '7px 0px 0px 7px; right: unset; left: 0' : '0px 7px 7px 0px; left: unset; right: 0'}};top:0">
+                                <span class="input-group-text" style="font-size: 20px;">
+                                    <i class="czi-search text-white"></i>
+                                </span>
+                        </button>
+                        <input name="data_from" value="search" hidden>
+                        <input name="page" value="1" hidden>
+                        <diV class="card search-card"
+                             style="position: absolute;background: white;z-index: 999;width: 100%;display: none">
+                            <div class="card-body search-result-box"
+                                 style="overflow:scroll; height:400px;overflow-x: hidden"></div>
+                        </diV>
+                    </form>
+                </div>

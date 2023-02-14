@@ -1,0 +1,66 @@
+body {
+    font-family: sans-serif;
+}
+
+.tsb {
+    font-weight: 600;
+}
+
+.tb {
+    font-weight: 700;
+}
+
+.twr {
+    font-weight: 400;
+}
+
+.rr {
+    font-family:  sans-serif;
+    font-weight: 400;
+}
+
+.rb {
+    font-family:  sans-serif;
+    font-weight: 700;
+}
+
+.navbar-brand img {
+
+}
+
+.primary {
+    color: #fff !important;
+    background: #645cb3 !important;
+
+    /* font-weight:bold;
+    font-size: 30px; */
+}
+
+.primary:hover{
+    color: #fff;
+    opacity: 0.9;
+}
+
+.logo-text {
+    font-family: 'Cairo', sans-serif;
+    color: #645cb3;
+    font-weight:bold;
+    font-size: 30px;
+    text-align: center;
+}
+.card-rounded{
+    border-radius: 40px !important;
+}
+.your-phone{
+    font-family: 'Cairo', sans-serif;
+    color: #404040;
+    text-align:center;
+    padding-top:2rem;
+    font-weight:bold
+}
+.whats-verfiry{
+    font-family: 'Cairo', sans-serif;
+    color: #9c9c9c;
+    text-align:center;
+    /* padding-top:2rem; */
+}
