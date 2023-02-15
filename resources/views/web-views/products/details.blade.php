@@ -258,7 +258,6 @@
                                         @endphp
 
                                         <div class="product-quantity d-flex justify-content-between align-items-center">
-                                        @foreach ($view as $val)
                                             <div
                                                 class="d-flex justify-content-center align-items-center"
                                                 style="width: 160px;color: {{$web_config['primary_color']}}">
@@ -266,12 +265,22 @@
                                                     <a class="btn btn-outline-primary" 
                                                             data-type="minus" data-field="quantity"
                                                             disabled="disabled" style="padding: 10px;color: {{$web_config['primary_color']}}">
-                                                       {{$val->unit_numbers}} {{$val->unit}} 
+                                                       {{$product->unit_numbers}} {{$product->unit}} 
                                                     </a>
                                                 </span>
-                                               
+                                                @foreach ($product->sizes as $val)
+                                                    
+                                                        <span class="input-group-btn m-2" style="">
+                                                            <a class="btn btn-outline-primary" 
+                                                                    data-type="minus" data-field="quantity"
+                                                                    disabled="disabled" style="padding: 10px;color: {{$web_config['primary_color']}}">
+                                                            {{$val->qty_in_unit}} {{$val->product_size}} 
+                                                            </a>
+                                                        </span>
+                                                    
+                                                @endforeach
                                             </div>
-                                        @endforeach
+                                        
                                         </div>
                                     </div>
                                     

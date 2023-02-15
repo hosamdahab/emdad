@@ -7,7 +7,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div>
-                                <form action="{{ route('seller.product.sendRequestModel') }}" method="POST"
+                                <form action="{{ route('seller.product.add.new.size') }}" method="POST"
                                     enctype="multipart/form-data">
                                     @csrf
                                     
@@ -25,7 +25,7 @@
 
                                         <div class="mb-3">
                                             <input type="text" name="product_type" value="{{$product->product_type}}" class="form-control"
-                                                placeholder="نوع المنتج">
+                                                placeholder="نوع المنتج" readonly>
                                         </div>
 
                                        
@@ -47,6 +47,7 @@
                                             <input type="text" name="qty_in_carton" class="form-control"
                                                 placeholder="الكمية في كل كرتونة">
                                         </div>
+                                        
 
                                         <div class="mb-3">
                                             <input type="text" name="product_price" id="add_product_price2" class="form-control"
@@ -54,7 +55,7 @@
                                         </div>
 
                                         <div class="mb-3">
-                                            <input type="text" name="purchase_price" onblur="getPrice2()" id="purchase_price2" class="form-control"
+                                            <input type="text" name="purchase_price"  class="form-control"
                                                 placeholder="سعر الشراء">
                                                 <span class="text-danger" id="price_error2"></span>
                                         </div>

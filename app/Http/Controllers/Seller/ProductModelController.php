@@ -10,6 +10,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use App\CPU\ImageManager;
 use App\SellerReqAddProduct;
 use App\seller_req_add_products;
+use App\ProductSize;
 
 class ProductModelController extends Controller
 {
@@ -119,7 +120,7 @@ class ProductModelController extends Controller
 
             $imageName = time().'.'.$request->image->extension();  
 
-            $request->image->move(public_path('product'), $imageName);
+            $request->image->move(public_path('product/thumbnail'), $imageName);
          
             $seller_req->product_image = $imageName;
         }
@@ -162,6 +163,31 @@ class ProductModelController extends Controller
         Product::findOrFail($id)->update(['unit_price' => $request->unit_price]);
 
         Toastr::success('تم التعديل بنجاح!');
+        return redirect()->back();
+    }
+
+    public function addNewSize(Request $request)
+    {
+        // dd($request->all());
+        if($request->hasFile('image')){
+
+            $imageName = time().'.'.$request->image->extension();  
+
+            $request->image->move(public_path('product/thumbnail'), $imageName);
+        }else{
+            $imageName=NULL;
+        }
+        ProductSize::create([
+            'product_id'=>$request->product_id,
+            'purchase_price'=>$request->purchase_price,
+            'product_size'=>$request->product_size,
+            'qty_in_carton'=>$request->qty_in_carton,
+            'product_price'=>$request->product_price,
+            'qty_in_stock'=>$request->qty_in_stock,
+            'image'=>$imageName,
+            'qty_in_unit'=>$request->qty_in_units,
+        ]);
+        Toastr::success('تم ارسال الطلب بنجاح!');
         return redirect()->back();
     }
 }

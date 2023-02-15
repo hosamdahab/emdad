@@ -1048,7 +1048,7 @@ class WebController extends Controller
     public function product_view($id)
     {
 
-        $product = DB::table('products')->find($id);
+        $product = Product::find($id);
         $Brand = DB::table('brands')->where('id', '=', $product->brand_id)->first();
         $sub_sub_category = DB::table('sub_sub_categories')->where('id', '=', $product->sub_sub_category_id)->first();
         $shop_info = DB::table('shops')->where('seller_id', '=', $product->user_id)->first();

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
+use App\ProductSize;
 
 class Product extends Model
 {
@@ -188,5 +189,10 @@ class Product extends Model
                 }
             },'reviews'])->withCount('reviews');
         });
+    }
+
+    public function sizes()
+    {
+        return $this->hasMany(ProductSize::class);
     }
 }

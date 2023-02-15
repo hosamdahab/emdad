@@ -250,6 +250,7 @@ Route::group(['namespace' => 'Seller', 'prefix' => 'seller', 'as' => 'seller.'],
             Route::post('/add-multi-price/model', 'ProductModelController@addNewMultiPrice')->name('addMultiPriceProductModel');
             Route::post('/update-multi-price', 'ProductModelController@editMultiPrice')->name('editMultiPrice');
             Route::post('/send-request/model', 'ProductModelController@sendRequestAdd')->name('sendRequestModel');
+            Route::post('add/new-size', 'ProductModelController@addNewSize')->name('add.new.size');
             Route::post('/send-request-product/model', 'ProductModelController@sendRequestProduct')->name('sendRequestProModel');
             Route::post('/update-product-price/{id}', 'ProductModelController@updateProPrice')->name('updateProPrice');
 

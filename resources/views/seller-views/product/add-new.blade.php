@@ -63,7 +63,7 @@
                                     @php($category = DB::table('categories')->where('id', '=', $product->category_ids)->first())
                                         <tr>
                                             <td>
-                                            <img src="{{asset('product/'.$product->images)}}" alt="" width="100" height="100">
+                                            <img src="{{asset('public/product/thumbnail/'.$product->images)}}" alt="" width="100" height="100">
                                             </td>
                                             
                                             @isset($product->name)
