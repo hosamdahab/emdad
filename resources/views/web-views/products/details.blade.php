@@ -342,10 +342,17 @@
 
                                                 <input type="hidden" id="myPrice" value="{{$product->unit_price}}">
                                             </div>
+                                            @php
+                                                  $carton_unit=$product->carton_unit==0 ? 1 :$product->carton_unit;
+                                            @endphp
                                             <div class="float-right"  id="chosen_price_div">
                                                 <div class="d-flex justify-content-center align-items-center {{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}}">
                                                     <div class="product-description-label"><strong>{{\App\CPU\translate('total_price')}}</strong> : </div>
-                                                    <strong id="chosen_price">{{$product->unit_price}}</strong> <strong style="margin:0 5px"> ريال </strong>
+                                                    {{-- <strong id="chosen_price">{{$product->unit_price}}</strong> <strong style="margin:0 5px"> ريال </strong> --}}
+                                                    <strong id="chosen_price" >{{ $product->unit_price}} </strong>
+                                                    <strong class="mr-1" > ريال</strong>
+                                                  
+                                                    <span class="mr-1" style="font-size:16px;font-weight: 600;">({{round($product->unit_price/$carton_unit,1)}} ريال للحبه)</span>
                                                 </div>
                                             
                                             </div>
@@ -479,7 +486,7 @@
                                 
                                         <div class="d-flex align-items-center justify-content-center"
                                             style="width:100%;height:341px">
-                                                <img src="{{asset('product/'.$product->images)}}" class="img-responsive" 
+                                                <img src="{{asset('public/product/thumbnail/'.$product->images)}}" class="img-responsive" 
                                                 alt="Product image" width="" alt="{{$product->name}}" style="width:100%;height:100%" draggable="false">
 
                                             <div class="cz-image-zoom-pane"></div>
