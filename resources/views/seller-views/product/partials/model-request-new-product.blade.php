@@ -16,16 +16,16 @@
 
                                         $get_brand = \App\Model\Brand::where('id', '=', auth('seller')->id())->get();
 
-                                        $branches = DB::table('branche')->where('user_id', '=', auth('seller')->id())->get();
+                                        // $branches = DB::table('branche')->where('user_id', '=', auth('seller')->id())->get();
 
                                     @endphp
 
 
-                                        <select name="branche_id" class="form-control rounded-pill" class="form-control">
+                                        {{-- <select name="branche_id" class="form-control rounded-pill" class="form-control">
                                             @foreach ($branches as $branche)
                                                 <option value="{{ $branche->id }}">{{ $branche->branche_name }}</option>
                                             @endforeach
-                                        </select>
+                                        </select> --}}
 
                                         @isset($get_brand->id)
                                         <select name="brand_id" id="" class="form-control">
@@ -106,11 +106,11 @@
                                                 <span class="text-danger" id="price_error"></span>
                                         </div>
 
-                                        <div class="pt-3" style="width: 100%">
+                                        {{-- <div class="pt-3" style="width: 100%">
                                             <input type="nubmer" onkeyup="calcDiscount()" readonly name="discount" id="discount" class="form-control rounded-pill"
                                                 placeholder="الخصم">
                                                 <span class="text-danger" id="price_error"></span>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="pt-3" style="width: 100%">
                                             <input type="text" name="qty_in_stock" class="form-control rounded-pill"

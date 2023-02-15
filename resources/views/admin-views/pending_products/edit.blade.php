@@ -28,14 +28,14 @@
       </select>
     </div>
 
-    @isset($get_branche)
+    {{-- @isset($get_branche)
     <div class="pt-3" style="width: 100%">
         <label for="inputPassword4" class="form-label"><strong>الفرع</strong> </label>
         <input type="text" name="branche_id" value="{{$get_branche->id}}" class="form-control" id="inputPassword4">
     </div>
-    @endisset
+    @endisset --}}
 
-    <div class="pt-3" style="width: 100%">
+    {{-- <div class="pt-3" style="width: 100%">
         <label for="inputEmail4" class="form-label"><strong>{{__('messages.category')}}</strong></label>
 
         @php 
@@ -50,10 +50,10 @@
         <option value="{{$val->id}}">{{$val->name}}</option>
         @endforeach
       </select>
-    </div>
+    </div> --}}
 
 
-    <div class="pt-3" style="width: 100%">
+    {{-- <div class="pt-3" style="width: 100%">
         <label for="inputEmail4" class="form-label"><strong>{{__('messages.sub_category')}}</strong></label>
 
         @php 
@@ -68,7 +68,7 @@
         <option value="{{$val->id}}">{{$val->name}}</option>
         @endforeach
       </select>
-    </div>
+    </div> --}}
 
 
     <div class="pt-3" style="width: 100%">
@@ -83,7 +83,7 @@
       <select name="sub_sub_category_id" id="" class="form-control">
       <option selected>{{__('messages.sub_sub_category')}}</option>
         @foreach($sub_sub_category as $val)
-        <option value="{{$val->id}}">{{$val->name}}</option>
+        <option {{ $order->sub_sub_category_id == $val->id ? 'selected' : ''}} value="{{$val->id}}">{{$val->name}}</option>
         @endforeach
       </select>
     </div>

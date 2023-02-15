@@ -43,6 +43,8 @@
                                         ->first();
                                     $user = App\CPU\Helpers::get_customer();
                                     $get_pro_wishlist = \App\Model\Wishlist::where([['customer_id', '=', $user->id], ['product_id', '=', $pro->id]])->first();
+                                    $carton_unit=$pro->carton_unit==0 ? 1 :$pro->carton_unit;
+
                                 ?>
     
                                 {{-- Product Items --}}
@@ -124,9 +126,11 @@
                                             </div>
                                             <br>
                                             <div class="d-flex {{ Session::get('direction') === 'rtl' ? 'ml-2' : 'mr-2' }}" class="your-phone text-right pt-0" style="font-size:20px">
-                                                <strong id="chosen_price" >{{ $pro->unit_price * $pro->carton_unit }} </strong>
+                                                {{-- <strong id="chosen_price" >{{ $pro->unit_price * $pro->carton_unit }} </strong> --}}
+                                                <strong id="chosen_price" >{{ $pro->unit_price}} </strong>
                                                 <strong class="mr-1" > ريال</strong>
-                                                <span class="mr-1" style="font-size:16px;font-weight: 600;">({{$pro->unit_price}} ريال للحبه)</span>
+                                              
+                                                <span class="mr-1" style="font-size:16px;font-weight: 600;">({{round($pro->unit_price/$carton_unit,1)}} ريال للحبه)</span>
                                             </div>
                                             
                                             <br>

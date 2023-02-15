@@ -28,12 +28,12 @@ class PendingProductsController extends Controller
 
 
     public function update(Request $request, $id) {
-
-      
+        
+        $sub_sub=DB::table('sub_sub_categories')->find($request->sub_sub_category_id);
         $request->validate([
 
             'brand_id'      => 'required',
-            'category_id'   => 'required',
+            // 'category_id'   => 'required',
             'product_type'  => 'required',
             'product_size'  => 'required',
             'qty_in_unit'   => 'required',
@@ -41,7 +41,7 @@ class PendingProductsController extends Controller
             'product_price' => 'required',
             'purchase_price'=> 'required',
             'qty_in_stock'  => 'required',
-            'branche_id'    => 'required',
+            // 'branche_id'    => 'required',
             
         ]);
         
@@ -95,12 +95,11 @@ class PendingProductsController extends Controller
                     $sub_sub_cate = null;
 
                 }
-
             Product::create([
 
                 'brand_id'          => $brand_id,
-                'category_ids'      => $request->category_id,
-                'sub_category_id'   => $sub_cate,
+                'category_ids'      => $sub_sub->category_id,
+                'sub_category_id'   => $sub_sub->sub_category_id,
                 'sub_sub_category_id'  =>$sub_sub_cate,
                 'name'              => $request->product_name,
                 'product_type'      => $request->product_type,
@@ -118,7 +117,7 @@ class PendingProductsController extends Controller
                 'slug'              => Str::slug($request->name),
                 'current_stock'     => $request->qty_in_stock,
                 'sku'               => hexdec(uniqid()),
-                'branche_id'        => $request->branche_id
+                // 'branche_id'        => $request->branche_id
             
         
             ]);
@@ -167,9 +166,9 @@ class PendingProductsController extends Controller
 
                     Product::create([
 
-
-                        'category_ids'      => $request->category_id,
-                        'sub_category_id'   => $sub_cate,
+                        'brand_id'          => $request->brand_id,
+                        'category_ids'      => $sub_sub->category_id,
+                        'sub_category_id'   => $sub_sub->sub_category_id,
                         'sub_sub_category_id'  => $sub_sub_cate,
                         'name'              => $request->product_name,
                         'product_type'      => $request->product_type,

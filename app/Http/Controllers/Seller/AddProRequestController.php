@@ -81,7 +81,7 @@ class AddProRequestController extends Controller
             'category_id'       => $get_subs->category_id,
             'sub_category_id'   => $get_subs->sub_category_id,
             'sub_sub_category_id'=> $get_subs->id,
-            'branche_id'        => $request->branche_id,
+            // 'branche_id'        => $request->branche_id,
             'discount'          => $request->discount
 
         

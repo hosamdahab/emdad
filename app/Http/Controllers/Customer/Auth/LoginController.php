@@ -154,7 +154,7 @@ class LoginController extends Controller
         if(Session::get("user.phone")){
             return view('customer-view.auth.login-phone-verify');
         }
-        return redirect()->route("register");
+        return redirect('/seller/auth/register');
     }
 
 
@@ -164,7 +164,13 @@ class LoginController extends Controller
         $token_  =   Session::get("user.token");
         $phone  =   Session::get("user.phone");
         $seller = User::where("phone", $phone)->first();
-
+        if(!$seller){
+            $seller = User::where("phone",  '+967'.$phone)->first();
+        }
+        if(!$seller){
+             Toastr::error('The user does not exist');
+             return redirect()->back();
+        }
 
         if ($token == $token_) {
             if(Auth::guard('customer')->login($seller)){
