@@ -1049,11 +1049,25 @@ class WebController extends Controller
     {
 
         $product = Product::find($id);
+        // dd($product->IsDiscount);
         $Brand = DB::table('brands')->where('id', '=', $product->brand_id)->first();
         $sub_sub_category = DB::table('sub_sub_categories')->where('id', '=', $product->sub_sub_category_id)->first();
         $shop_info = DB::table('shops')->where('seller_id', '=', $product->user_id)->first();
         $same_products = DB::table('products')->where('brand_id',$product->brand_id)->get();
         return view('web-views.products.details', compact('product', 'sub_sub_category','same_products', 'Brand', 'shop_info'));
+    }
+
+    public function product_view_details($id,$size_id)
+    {
+
+        $product = Product::find($id);
+        $Brand = DB::table('brands')->where('id', '=', $product->brand_id)->first();
+        $sub_sub_category = DB::table('sub_sub_categories')->where('id', '=', $product->sub_sub_category_id)->first();
+        $shop_info = DB::table('shops')->where('seller_id', '=', $product->user_id)->first();
+        $same_products = DB::table('products')->where('brand_id',$product->brand_id)->get();
+        $other_size=$product->sizes->where('id',$size_id)->first();
+        
+        return view('web-views.products.other-size-details', compact('product', 'sub_sub_category','same_products', 'Brand', 'shop_info','size_id','other_size'));
     }
 
 

@@ -25,10 +25,10 @@ class DeliveryController extends Controller
         $request->validate([
             
             'f_name'        => 'required',
-            'l_name'        => 'required',
+            // 'l_name'        => 'required',
             'phone'         => 'required',
             'zone_id'       => 'required',
-            'password'      => 'required',
+            // 'password'      => 'required',
             
         ]);
 
@@ -38,8 +38,8 @@ class DeliveryController extends Controller
         DeliveryMan::insert([
             
             'f_name'        => $request->f_name,
-            'l_name'        => $request->l_name,
-            'password'      => Hash::make($request->password),
+            // 'l_name'        => $request->l_name,
+            // 'password'      => Hash::make($request->password),
             'phone'         => $request->phone,
             'zone_id'       => json_encode($request->zone_id),
             'seller_id'     => auth('seller')->id(),

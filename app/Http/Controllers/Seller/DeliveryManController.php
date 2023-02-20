@@ -255,7 +255,7 @@ class DeliveryManController extends Controller
         $request->validate([
             
             'f_name'        => 'required',
-            'l_name'        => 'required',
+            // 'l_name'        => 'required',
             'phone'         => 'required',
             'zone_id'       => 'required',
             
@@ -267,7 +267,7 @@ class DeliveryManController extends Controller
         $DeliveryMan = DeliveryMan::where('id', '=', $myId)->update([
 
             'f_name'        => $request->f_name,
-            'l_name'        => $request->l_name,
+            // 'l_name'        => $request->l_name,
             'phone'         => $request->phone,
             'zone_id'       => $request->zone_id,
             'updated_at'    => Carbon::now()

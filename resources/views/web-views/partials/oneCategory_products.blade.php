@@ -22,7 +22,7 @@
                             </div>
                         </div>
     
-                        @php($getPro = DB::table('products')->where('category_ids', '=', $category->id)->get())
+                        @php($getPro = \App\Model\Product::where('category_ids', '=', $category->id)->get())
     
                         {{-- {{dd($getPro)}} --}}
                         <div class="owl-carousel owl-theme pt-4 products_list">
@@ -127,10 +127,14 @@
                                             <br>
                                             <div class="d-flex {{ Session::get('direction') === 'rtl' ? 'ml-2' : 'mr-2' }}" class="your-phone text-right pt-0" style="font-size:20px">
                                                 {{-- <strong id="chosen_price" >{{ $pro->unit_price * $pro->carton_unit }} </strong> --}}
-                                                <strong id="chosen_price" >{{ $pro->unit_price}} </strong>
+                                                <strong style="{{ $pro->IsDiscount ? 'text-decoration: line-through;' : NULL }}" id="chosen_price">{{ $pro->unit_price}} </strong>
+                                                @if ($pro->IsDiscount)
+                                                    <strong class="mr-1">{{ $pro->offer_price}} </strong>
+                                                    
+                                                @endif
                                                 <strong class="mr-1" > ريال</strong>
                                               
-                                                <span class="mr-1" style="font-size:16px;font-weight: 600;">({{round($pro->unit_price/$carton_unit,1)}} ريال للحبه)</span>
+                                                <span class="mr-1" style="font-size:16px;font-weight: 600;">({{ $pro->IsDiscount ? round($pro->offer_price/$carton_unit,1) : round($pro->unit_price/$carton_unit,1)}} ريال للحبه)</span>
                                             </div>
                                             
                                             <br>

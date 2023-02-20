@@ -43,6 +43,7 @@ Route::get('/brand/products/{id}', [WebController::class,'brand_products'])->mid
 Route::post('/sub-category/search', [WebController::class,'sub_category_search'])->middleware('customer')->name('sub.category.search');
 
 Route::get('/product/{id}', [WebController::class,'product_view'])->middleware('customer')->name('product.view');
+Route::get('/product/{product_id}/{size_id}', [WebController::class,'product_view_details'])->middleware('customer')->name('product.view.size');
 
 Route::post('/product/filters-search', [WebController::class,'product_filters_serach'])->middleware('customer')->name('product.filters.serach');
 

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 use App\ProductSize;
+use Carbon\Carbon;
 
 class Product extends Model
 {
@@ -194,5 +195,14 @@ class Product extends Model
     public function sizes()
     {
         return $this->hasMany(ProductSize::class);
+    }
+
+    public function getIsDiscountAttribute()
+    {
+        if($this->offer_price && Carbon::today() < $this->offer_end){
+            return true;
+        }else{
+          return false;
+        }
     }
 }

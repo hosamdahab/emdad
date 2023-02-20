@@ -140,8 +140,13 @@
                                         </td>
                                         <td>
 
-                                        <a href="{{route('seller.product.view', ['id' => $p->id])}}">{{number_format($p->unit_price,2)}}</a>
-                                           
+                                        {{-- <a href="{{route('seller.product.view', ['id' => $p->id])}}">{{number_format($p->unit_price,2)}}</a> --}}
+                                           <form method="POST" action="{{ route('updatePrice') }}">
+                                            @csrf
+                                                <input type="hidden" name="id" value="{{ $p->id }}">
+                                                <input name="unit_price" style="width: 100px" class="form-control" type="number" value="{{ $p->unit_price }}">
+                                                <button class="btn btn-info btn-sm">حفظ</button>
+                                           </form>
                                         </td>
                                         {{-- <td>
                                             @if($p->request_status == 0)

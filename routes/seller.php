@@ -29,6 +29,9 @@ Route::post('/seller/product/add/new/product', [ProductController::class,'get_se
 Route::post('/seller/product/update-price/{id}', [ProductController::class,'seller_product_update_price'])->middleware('seller')->name('seller.product.update.product.price');
 
 Route::get('/seller/product/update/price', [ProductController::class,'seller_product_update_price_file'])->middleware('seller')->name('seller.product.update.price.file');
+Route::get('/seller/product/get/price', [ProductController::class,'get_seller_prices'])->middleware('seller')->name('get_seller_prices');
+Route::post('/seller/product/get/price', [ProductController::class,'post_seller_prices'])->middleware('seller')->name('post_seller_prices');
+Route::post('/seller/product/update/price', [ProductController::class,'updatePrice'])->middleware('seller')->name('updatePrice');
 Route::post('/seller/product/update/price/file', [ProductController::class,'seller_product_update_price_file_update'])->middleware('seller')->name('seller.product.file.update');
 
 Route::get('/seller/product/offers', [ProductController::class,'seller_product_offers'])->middleware('seller')->name('seller.product.offers');

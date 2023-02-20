@@ -77,6 +77,7 @@ Route::group(['namespace' => 'api\v2', 'prefix' => 'v2', 'middleware' => ['api_l
 
         Route::group(['prefix' => 'auth', 'namespace' => 'auth'], function () {
             Route::post('login', 'LoginController@login');
+            Route::post('verfy', 'LoginController@verfy');
         });
 
         Route::group(['middleware' => ['delivery_man_auth']], function () {

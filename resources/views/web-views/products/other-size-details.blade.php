@@ -177,9 +177,9 @@
                         <div class="details">
                             <p class="mb-2" style="font-size: 22px;font-weight:700;">{{$Brand->name}} @isset($sub_sub_category->name) {{$sub_sub_category->name}} @endisset {{$product->product_type}}</p>
                             <section class="d-flex">
-                            <span class="mb-2"> {{$product->carton_unit}}  </span>
+                            <span class="mb-2"> {{$other_size->qty_in_carton}}  </span>
                             <span> X </span>
-                            <span> {{$product->unit_numbers}} {{$product->unit}} </span>
+                            <span> {{$other_size->qty_in_unit}} {{$other_size->product_size}} </span>
                             </section>
                             <div class="d-flex align-items-center mb-2 pro">
                                 <span
@@ -233,10 +233,10 @@
                                                     <div>
                                                         <li class="for-mobile-capacity">
                                                             <input type="radio"
-                                                                id="{{ $product->carton_unit }}"
-                                                                name="{{ $product->carton_unit }}" value="{{ $product->carton_unit }}">
+                                                                id="{{ $other_size->qty_in_carton }}"
+                                                                name="{{ $other_size->qty_in_carton }}" value="{{ $other_size->qty_in_carton }}">
                                                             <label style="font-size: 12px;"
-                                                                for="{{ $product->carton_unit }}">{{$product->carton_unit}}</label>
+                                                                for="{{ $other_size->qty_in_carton }}">{{$other_size->qty_in_carton}}</label>
                                                         
                                                         
                                                             </li>
@@ -263,6 +263,7 @@
                                                 style="width: 160px;color: {{$web_config['primary_color']}}">
                                                 <span class="input-group-btn" style="">
                                                     <a class="btn btn-outline-primary" 
+                                                    href="{{ Route('product.view',$product->id) }}"
                                                             data-type="minus" data-field="quantity"
                                                             disabled="disabled" style="padding: 10px;color: {{$web_config['primary_color']}}">
                                                        {{$product->unit_numbers}} {{$product->unit}} 
@@ -353,20 +354,16 @@
                                                 <input type="hidden" id="myPrice" value="{{$product->unit_price}}">
                                             </div>
                                             @php
-                                                  $carton_unit=$product->carton_unit==0 ? 1 :$product->carton_unit;
+                                                  $carton_unit=$other_size->qty_in_carton==0 ? 1 :$other_size->qty_in_carton;
                                             @endphp
                                             <div class="float-right"  id="chosen_price_div">
                                                 <div class="d-flex justify-content-center align-items-center {{Session::get('direction') === "rtl" ? 'ml-2' : 'mr-2'}}">
                                                     <div class="product-description-label"><strong>{{\App\CPU\translate('total_price')}}</strong> : </div>
                                                     {{-- <strong id="chosen_price">{{$product->unit_price}}</strong> <strong style="margin:0 5px"> ريال </strong> --}}
-                                                    <strong style="{{ $product->IsDiscount ? 'text-decoration: line-through;' : NULL }}" id="chosen_price">{{ $product->unit_price}} </strong>
-                                                    @if ($product->IsDiscount)
-                                                        <strong class="mr-1">{{ $product->offer_price}} </strong>
-                                                        
-                                                    @endif
+                                                    <strong id="chosen_price" >{{ $other_size->product_price}} </strong>
                                                     <strong class="mr-1" > ريال</strong>
                                                   
-                                                    <span class="mr-1" style="font-size:16px;font-weight: 600;">({{ $product->IsDiscount ? round($product->offer_price/$carton_unit,1) : round($product->unit_price/$carton_unit,1)}} ريال للحبه)</span>
+                                                    <span class="mr-1" style="font-size:16px;font-weight: 600;">({{round($other_size->product_price/$carton_unit,1)}} ريال للحبه)</span>
                                                 </div>
                                             
                                             </div>
@@ -500,7 +497,7 @@
                                 
                                         <div class="d-flex align-items-center justify-content-center"
                                             style="width:100%;height:341px">
-                                                <img src="{{asset('public/product/thumbnail/'.$product->images)}}" class="img-responsive" 
+                                                <img src="{{asset('public/product/thumbnail/'.$other_size->image)}}" class="img-responsive" 
                                                 alt="Product image" width="" alt="{{$product->name}}" style="width:100%;height:100%" draggable="false">
 
                                             <div class="cz-image-zoom-pane"></div>

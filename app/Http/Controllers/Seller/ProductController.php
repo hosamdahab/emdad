@@ -1072,4 +1072,41 @@ class ProductController extends Controller
         return redirect()->back();
 
     }
+
+
+    public function get_seller_prices()
+    {
+        $products_ids=DB::table('seller_req_add_products')->where('seller_id',Auth::guard('seller')->user()->id)->where('product_id','!=',NULL)->pluck('product_id')->toArray();
+        $products=Product::whereIn('id',$products_ids)->select('id','name','unit_price','purchase_price')->get();
+        return (new FastExcel($products))->download('products.xlsx');
+    }
+
+    public function post_seller_prices(Request $request)
+    {   
+        $file = $request->file;
+
+            $check = time().'.'.$file->extension();  
+         
+          $get_file = $request->file->move(public_path('product/files'), $check);
+        $products = (new FastExcel)->import($get_file, function ($line) {
+
+            return Product::findOrfail($line['id'])->update([
+
+                'unit_price'          => $line['unit_price'],
+                'purchase_price'      => $line['purchase_price'],     
+            ]);
+        });
+        Toastr::success('تم التعديل بنجاح'); 
+        return redirect()->back();
+
+    }
+
+    public function updatePrice(Request $request)
+    {
+        Product::findOrfail($request->id)->update([
+           'unit_price'=>$request->unit_price, 
+        ]);
+        Toastr::success('تم التعديل بنجاح'); 
+        return redirect()->back();
+    }
 }
