@@ -15,7 +15,9 @@ use function App\CPU\translate;
 use App\CPU\OrderManager;
 use App\Model\Product;
 use Auth;
-
+use Carbon\Carbon;
+use App\DeliveryProductCommission;
+use App\DeliveryMenWallet;
 
 class DeliveryManController extends Controller
 {
@@ -313,6 +315,8 @@ class DeliveryManController extends Controller
             $total_amount['total_amount'] = $total_orders;
             
             $total_amount['last_payment'] = $last_paid_date;
+            $wallet=DeliveryMenWallet::where('delivery_man_id',$check->id)->first();
+            $total_amount['wallet_current_balance'] = $wallet? $wallet->total_earning : 0;
             
             
 
@@ -405,6 +409,41 @@ class DeliveryManController extends Controller
                 $value = Helpers::order_status_update_message('ord_start');
             } elseif ($request['status'] == 'delivered') {
                 $value = Helpers::order_status_update_message('delivered');
+
+                if(isset($order->details)){
+                    foreach($order->details as $details){
+                        $product=Product::find($details->product_id);
+                        if($product->commissions_min_delivery && $product->commissions_end_date >= Carbon::today() ){
+                            $row=DeliveryProductCommission::create([
+                                'product_id'=>$product->id,
+                                'qty'=>$details->qty,
+                                'delivery_man_id'=>$d_man['id'],
+                                'date'=>Carbon::today(),
+                            ]);
+
+                            $check=DeliveryProductCommission::where('product_id',$product->id)->where('delivery_man_id',$d_man['id'])
+                            ->where('date','<=',$product->commissions_end_date)
+                            ->where('date','>=',$product->commissions_start_date)
+                            ->sum('qty');
+
+                            if($check>=$product->commissions_min_delivery){
+                                $total_price=$product->commissions_min_delivery*$product->unit_price;
+                                $commissions_delivery_percent=$product->commissions_delivery_percent;
+                                $commissions_price=round(($commissions_delivery_percent/$total_price)*100,1);
+                                
+                                $check_wallet=DeliveryMenWallet::where('delivery_man_id',$d_man['id'])->first();
+
+                                if($check_wallet){
+                                    $current_total_earning=$check_wallet->total_earning;
+                                    $check_wallet->update(['total_earning'=>$check_wallet->total_earning +$commissions_price]);
+                                }else{
+                                    DeliveryMenWallet::create(['delivery_man_id'=>$d_man['id'],'total_earning'=>$commissions_price]);
+                                }
+
+                            }
+                        }
+                    }
+                }
             }
             
             if ($value) {

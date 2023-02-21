@@ -12,8 +12,8 @@ class Seller extends Authenticatable
 
 
 
-    protected $fillable = [
-        'f_name', 'phone', 'email', 'password', 'phone'
+    protected $guarded = [
+        // 'f_name', 'phone', 'email', 'password', 'phone'
     ];
 
     protected $casts = [

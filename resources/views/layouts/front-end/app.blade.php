@@ -708,7 +708,7 @@
     <style>
         .dropdown-menu {
             min-width: 304px !important;
-            margin-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}: -8px !important;
+            /* margin-{{Session::get('direction') === "rtl" ? 'right' : 'left'}}: -8px !important; */
             border-top-left-radius: 0px;
             border-top-right-radius: 0px;
         }
@@ -876,7 +876,7 @@ function closeForm() {
 </script>
 
 <script>
-    function addWishlist(product_id) {
+       function addWishlist(product_id) {
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
@@ -895,7 +895,7 @@ function closeForm() {
                         type: 'success',
                         title: data.success,
                         showConfirmButton: false,
-                        timer: 1500
+                        timer: 1500,
                     });
                     $('.countWishlist').html(data.count);
                     $('.countWishlist-' + product_id).text(data.product_count);
@@ -951,7 +951,7 @@ function closeForm() {
 
     function quickView(product_id) {
         $.get({
-            url: '{{route('quick-view')}}',
+            url: '{{route("quick-view")}}',
             dataType: 'json',
             data: {
                 product_id: product_id
@@ -978,7 +978,7 @@ function closeForm() {
                 }
             });
             $.post({
-                url: '{{ route('cart.add') }}',
+                url: '{{ route("cart.add") }}',
                 data: $('#' + form_id).serializeArray(),
                 beforeSend: function () {
                     $('#loading').show();
@@ -989,7 +989,7 @@ function closeForm() {
                         updateNavCart();
                         toastr.success(response.message, {
                             CloseButton: true,
-                            ProgressBar: true
+                            ProgressBar: true,
                         });
                         $('.call-when-done').click();
                         if(redirect_to_checkout)
@@ -1015,9 +1015,10 @@ function closeForm() {
             Swal.fire({
                 type: 'info',
                 title: 'Cart',
-                text: '{{\App\CPU\translate('please_choose_all_the_options')}}'
+                text: '{{\App\CPU\translate("please_choose_all_the_options")}}'
             });
         }
+        
     }
 
     function buy_now() {
@@ -1033,23 +1034,23 @@ function closeForm() {
         });
         $.ajax({
             type: 'POST',
-            url: '{{route('currency.change')}}',
+            url: '{{route("currency.change")}}',
             data: {
                 currency_code: currency_code
             },
             success: function (data) {
-                toastr.success('{{\App\CPU\translate('Currency changed to')}}' + data.name);
+                toastr.success('{{\App\CPU\translate("Currency changed to")}}' + data.name);
                 location.reload();
             }
         });
     }
 
     function removeFromCart(key) {
-        $.post('{{ route('cart.remove') }}', {_token: '{{ csrf_token() }}', key: key}, function (response) {
+        $.post('{{ route("cart.remove") }}', {_token: '{{ csrf_token() }}', key: key}, function (response) {
             console.log(response)
             updateNavCart();
             $('#cart-summary').empty().html(response.data);
-            toastr.info('{{\App\CPU\translate('Item has been removed from cart')}}', {
+            toastr.info('{{\App\CPU\translate("Item has been removed from cart")}}', {
                 CloseButton: true,
                 ProgressBar: true
             });
@@ -1057,7 +1058,7 @@ function closeForm() {
     }
 
     function updateNavCart() {
-        $.post('{{route('cart.nav-cart')}}', {_token: '{{csrf_token()}}'}, function (response) {
+        $.post('{{route("cart.nav-cart")}}', {_token: '{{csrf_token()}}'}, function (response) {
             $('#cart_items').html(response.data);
         });
     }
@@ -1113,7 +1114,7 @@ function closeForm() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Cart',
-                    text: '{{\App\CPU\translate('Sorry, the minimum value was reached')}}'
+                    text: '{{\App\CPU\translate("Sorry, the minimum value was reached")}}'
                 });
                 $(this).val($(this).data('oldValue'));
             }
@@ -1123,7 +1124,7 @@ function closeForm() {
                 Swal.fire({
                     icon: 'error',
                     title: 'Cart',
-                    text: '{{\App\CPU\translate('Sorry, stock limit exceeded')}}.'
+                    text: '{{\App\CPU\translate("Sorry, stock limit exceeded")}}.'
                 });
                 $(this).val($(this).data('oldValue'));
             }
@@ -1148,7 +1149,7 @@ function closeForm() {
     }
 
     function updateQuantity(key, element) {
-        $.post('<?php echo e(route('cart.updateQuantity')); ?>', {
+        $.post('<?php echo e(route("cart.updateQuantity")); ?>', {
             _token: '<?php echo e(csrf_token()); ?>',
             key: key,
             quantity: element.value
@@ -1160,7 +1161,7 @@ function closeForm() {
 
     function updateCartQuantity(key) {
         var quantity = $("#cartQuantity" + key).children("option:selected").val();
-        $.post('{{route('cart.updateQuantity')}}', {
+        $.post('{{route("cart.updateQuantity")}}', {
             _token: '{{csrf_token()}}',
             key: key,
             quantity: quantity
@@ -1191,7 +1192,7 @@ function closeForm() {
             });
             $.ajax({
                 type: "POST",
-                url: '{{ route('cart.variant_price') }}',
+                url: '{{ route("cart.variant_price") }}',
                 data: $('#add-to-cart-form').serializeArray(),
                 success: function (data) {
                     console.log(data)
@@ -1221,17 +1222,13 @@ function closeForm() {
         return false;
     }
 
-    @if(Request::is('/') &&  \Illuminate\Support\Facades\Cookie::has('popup_banner')==false)
-    $(document).ready(function () {
-        $('#popup-modal').appendTo("body").modal('show');
-    });
-    @php(\Illuminate\Support\Facades\Cookie::queue('popup_banner', 'off', 1))
-    @endif
+   
 
     $(".clickable").click(function () {
         window.location = $(this).find("a").attr("href");
         return false;
     });
+
 </script>
 
 @if ($errors->any())
@@ -1406,7 +1403,7 @@ function closeForm() {
                     error: function(response){
                         $('#image-input-error').text(response.responseJSON.message);
                     } */
-            /* }); */ */
+            /* }); */
 
 
         /* console.log('good'); */
