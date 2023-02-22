@@ -833,18 +833,25 @@ class ProductController extends BaseController
             'tax'               => 'required',
             'current_stock'     => 'required',
             'carton_unit'       => 'required',
-            'images'     => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'thumbnail' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'product_image'     => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'product_thumbnail' => 'required|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
         
-        $imageName = time().'.'.$request->images->extension();  
+        // $imageName = time().'.'.$request->images->extension();  
          
-        $request->images->move(public_path('product'), $imageName);
+        // $request->images->move(public_path('product'), $imageName);
 
 
-        $thumbnailName = time().'.'.$request->thumbnail->extension();  
+        // $thumbnailName = time().'.'.$request->thumbnail->extension();  
          
-        $request->thumbnail->move(public_path('product/thumbnail'), $thumbnailName);
+        // $request->thumbnail->move(public_path('product/thumbnail'), $thumbnailName);
+
+        if ($request->file('product_image')) {
+            
+                $product_images = ImageManager::upload('product/', 'png', $request->product_image);
+            $imageName = $product_images;
+        }
+        $thumbnailName = ImageManager::upload('product/', 'png', $request->product_thumbnail);
 
 
         $pro_type = $request->product_type;
@@ -863,25 +870,25 @@ class ProductController extends BaseController
     
         $branch = DB::table('branches')->where('id', '=', $get_branche)->first();
 
-        $category = [];
-        if ($request->category_id != null) {
-            array_push($category, [
-                'id' => $request->category_id,
-                'position' => 1,
-            ]);
-        }
-        if ($request->sub_category_id != null) {
-            array_push($category, [
-                'id' => $request->sub_category_id,
-                'position' => 2,
-            ]);
-        }
-        if ($request->sub_sub_category_id != null) {
-            array_push($category, [
-                'id' => $request->sub_sub_category_id,
-                'position' => 3,
-            ]);
-        }
+        $category = $request->category_id;
+        // if ($request->category_id != null) {
+        //     array_push($category, [
+        //         'id' => $request->category_id,
+        //         'position' => 1,
+        //     ]);
+        // }
+        // if ($request->sub_category_id != null) {
+        //     array_push($category, [
+        //         'id' => $request->sub_category_id,
+        //         'position' => 2,
+        //     ]);
+        // }
+        // if ($request->sub_sub_category_id != null) {
+        //     array_push($category, [
+        //         'id' => $request->sub_sub_category_id,
+        //         'position' => 3,
+        //     ]);
+        // }
 
       
         $choice_options = [];
@@ -915,11 +922,11 @@ class ProductController extends BaseController
             'sub_category_id'       => $request->sub_category_id,
             'sub_sub_category_id'   => $request->sub_sub_category_id,
             'branche_id'            => $request->branche_id,
-            'category_ids'          => json_encode($category),
+            'category_ids'          => $category,
             'colors'                => json_encode($colors),
-            'choice_options'        => json_decode($choice_options),
-            'variations'            => json_decode($variations),
-            'images'                => json_decode($imageName),
+            // 'choice_options'        => json_decode($choice_options),
+            // 'variations'            => json_decode($variations),
+            'images'                => $imageName,
             'address_longitude'     => $branch->address_longitude,
             'address_latitude'      => $branch->address_latitude,
             'created_at'            => Carbon::now()
