@@ -121,7 +121,7 @@ class CustomerController extends Controller
         $check = $request->categories;
 
         $categories = User::where('building_type', '=', $check)->get();
-
+        // dd($categories);
         if(count($categories) > 0) {
 
             foreach($categories as $user) {
@@ -140,6 +140,8 @@ class CustomerController extends Controller
             }
 
             
+        }else{
+            $order = 0;
         }
        
 

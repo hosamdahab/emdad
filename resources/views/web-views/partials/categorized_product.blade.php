@@ -90,7 +90,7 @@
                                                             href="{{ route('product.view', ['id' => $pro->id]) }}"
                                                             class="your-phone text-right"
                                                             style="text-decoration:none;font-size:16px;">
-                                                            {{ $Brand->name . ' ' . $pro->name }}
+                                                            {{ $Brand ? $Brand->name : '' . ' ' . $pro->name }}
     
                                                         </a>
                                                     </h5>
