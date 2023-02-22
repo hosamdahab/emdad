@@ -49,9 +49,9 @@
                                         <select
                                             class="js-example-basic-multiple form-control"
                                             name="brand_id" id="brand_id_edit">
-                                            <option value="{{old('category_id')}}" selected disabled>---Select---</option>
+                                            <option value="{{old('brand_id')}}" selected disabled>---Select---</option>
                                             @foreach($br as $b)
-                                                <option value="{{$b->id}}" class="{{$b->category_id}}">
+                                                <option {{ $product->brand_id == $b->id ? 'selected' : NULL }} value="{{$b->id}}" class="{{$b->category_id}}">
                                                     {{$b->name}}
                                                 </option>
                                             @endforeach
@@ -66,7 +66,7 @@
                                             name="category_id" id="category_id_edit">
                                             <option value="{{old('category_id')}}" selected disabled>---Select---</option>
                                             @foreach($cat as $c)
-                                                <option value="{{$c->id}}">
+                                                <option {{ $product->category_ids == $c->id ? 'selected' : NULL }} value="{{$c->id}}">
                                                     {{$c['name']}}
                                                 </option>
                                             @endforeach
@@ -86,7 +86,7 @@
                                             class="js-example-basic-multiple form-control"
                                             name="unit">
                                             @foreach(\App\CPU\Helpers::units() as $x)
-                                                <option
+                                                <option {{ $product->unit == $x ? 'selected' : NULL }}
                                                     value="{{$x}}" {{old('unit')==$x? 'selected':''}}>{{$x}}</option>
                                             @endforeach
                                         </select>
@@ -130,7 +130,7 @@
                                             <option value="{{old('category_id')}}" selected disabled>---Select---</option>
                                            
                                             @foreach(\App\Model\subsCategory::all() as $c)
-                                                <option value="{{$c->id}}" class="{{$c->id}}">
+                                                <option {{ $product->sub_category_id == $c->id ? 'selected' : NULL }} value="{{$c->id}}" class="{{$c->id}}">
                                                     {{$c->name}}
                                                 </option>
                                             @endforeach
@@ -147,7 +147,7 @@
                                             <option value="{{old('category_id')}}" selected disabled>---Select---</option>
                                            
                                             @foreach(\App\Model\sub_sub_category::all() as $c)
-                                                <option value="{{$c->id}}">
+                                                <option {{ $product->sub_sub_category_id == $c->id ? 'selected' : NULL }} value="{{$c->id}}">
                                                     {{$c->name}}
                                                 </option>
                                             @endforeach
@@ -162,9 +162,9 @@
                                             class="js-example-basic-multiple form-control"
                                             name="branche_id"
                                             onchange="getRequest('{{url('/')}}/admin/product/get-categories?parent_id='+this.value,'sub-category-select','select')">
-                                            <option value="{{old('category_id')}}" selected disabled>---Select---</option>
+                                            <option value="{{old('branche_id')}}" selected disabled>---Select---</option>
                                             @foreach($Branche as $b)
-                                                <option value="{{$b->id}}">
+                                                <option {{ $product->branche_id == $b->id ? 'selected' : NULL }} value="{{$b->id}}">
                                                     {{$b->branche_name}}
                                                 </option>
                                             @endforeach
@@ -180,7 +180,7 @@
                                             onchange="getRequest('{{url('/')}}/admin/product/get-categories?parent_id='+this.value,'sub-category-select','select')">
                                             <option value="{{old('category_id')}}" selected disabled>---Select---</option>
                                             @foreach($seller as $s)
-                                                <option value="{{$s->id}}">
+                                                <option {{ $product->child_seller_id == $s->id ? 'selected' : NULL }} value="{{$s->id}}">
                                                     {{$s->f_name}}
                                                 </option>
                                             @endforeach
