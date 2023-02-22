@@ -9,7 +9,7 @@ use Carbon\Carbon;
 use App\Model\Category;
 use App\CPU\ImageManager;
 use Brian2694\Toastr\Facades\Toastr;
-
+use File;
 
 
 class BrandsController extends Controller
@@ -80,18 +80,24 @@ class BrandsController extends Controller
 
     public function admin_brands_delete(Request $request) {
 
-        $myId = $request->myId;
-        $getId = Brand::where('id', '=', $myId)->first();
+        // $myId = $request->myId;
+        // $getId = Brand::where('id', '=', $myId)->first();
 
-        if(file_exists(public_path('brand/').$getId->image)) {
+        // if(file_exists(public_path('brand/').$getId->image)) {
 
 
-            unlink(public_path('brand/').$getId->image);
-        }
+        //     unlink(public_path('brand/').$getId->image);
+        // }
        
 
-        Brand::find($myId)->delete();
+        // Brand::find($myId)->delete();
+        $row=Brand::find($request->myId);
+         if(file_exists(public_path('brand/').$row->image)) {
 
+
+            File::delete(public_path('brand/').$row->image);
+        }
+        $row->delete();
         Toastr::success('Brand Deleted successfully!');
         return back();
     }
