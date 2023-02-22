@@ -54,7 +54,7 @@
                                         <select class="form-control" name="category_id" aria-label="Default select example">
                                         <option selected>{{__('messages.category')}}</option>
                                         @foreach($category as $val)
-                                        <option value="{{$val->id}}">{{$val->name}}</option>
+                                        <option {{ $val->id == $b->category_id ? 'selected' : '' }} value="{{$val->id}}">{{$val->name}}</option>
                                         @endforeach
                                         </select>
                                         <input type="hidden" name="brand_id" id="brand_id" value="{{$b->id}}">
