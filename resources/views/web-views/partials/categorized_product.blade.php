@@ -165,7 +165,7 @@
                                                     <input type="hidden" name="sub_sub_category_id"
                                                         value="{{ $pro->sub_sub_category_id }}">
                                                     <button type="submit"
-                                                        class="btn primary text-white w-100 rounded-pill">{{ __('messages.add_cart') }}</button>
+                                                        class="btn primary text-white w-100 rounded-pill category_pro_add_cart">{{ __('messages.add_cart') }}</button>
                                                 </form>
                                             @else
                                                 <a href="{{ route('customer.auth.login') }}"
